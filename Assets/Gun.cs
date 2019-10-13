@@ -5,6 +5,7 @@ public class Gun : MonoBehaviour
     public LineRenderer LineRender;
     public Camera playerCam;
     public GameObject spawnObject;
+    public GameObject spawnedObject;
 
     public float damage = 10f;
     public float range = 100f;
@@ -42,9 +43,20 @@ public class Gun : MonoBehaviour
         {
             Debug.Log($"Ending Display of line at: {removeLineRenderTime}");
 
+            var hitDirection = (hit.point - transform.position).normalized;
+
+            Physics.Raycast(transform.position, hitDirection, out RaycastHit gunHit);
+
+            Debug.Log(gunHit.point);
+
             if (CanSpawn())
             {
-                Spawn(hit.point);
+                if (spawnedObject != null)
+                {
+                    Destroy(spawnedObject);
+                }
+
+                spawnedObject = Spawn(gunHit.point);
                 LineRender.SetPositions(new Vector3[] { transform.position, hit.point });
                 removeLineRenderTime = Time.time + lineDisplayTime;
                 LineRender.enabled = true;
@@ -78,11 +90,11 @@ public class Gun : MonoBehaviour
 
     }
 
-    private void Spawn(Vector3 spawnLoc)
+    private GameObject Spawn(Vector3 spawnLoc)
     {
         nextSpawnTime = Time.time + spawnDelay;
-        Instantiate(spawnObject, spawnLoc, Quaternion.identity);
-        Debug.Log($"Spoawned at: {spawnLoc}");
+        Debug.Log($"Spawned at: {spawnLoc}");
+        return Instantiate(spawnObject, spawnLoc, Quaternion.identity);
     }
 
     private bool CanSpawn()

@@ -23,7 +23,7 @@ public class FollowPlayer : MonoBehaviour
         mouseX += Input.GetAxis("Mouse X") * RotationSpeed;
         mouseY -= Input.GetAxis("Mouse Y") * RotationSpeed;
 
-        mouseY = Mathf.Clamp(mouseY, -35, 60);//stops camera from gliutching out
+        mouseY = Mathf.Clamp(mouseY, -35, 60);//stops camera from glitching out
 
         Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
         Player.rotation = Quaternion.Euler(0, mouseX, 0);
