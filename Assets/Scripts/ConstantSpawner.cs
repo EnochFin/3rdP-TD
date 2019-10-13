@@ -29,7 +29,7 @@ public class ConstantSpawner : MonoBehaviour
         if (Time.time > nextSpawnTime)
         {
             nextSpawnTime += spawnTime;
-            var spawnedObj = Instantiate(spawnObject, transform.position, Quaternion.identity);
+            var spawnedObj = Instantiate(spawnObject, transform.position, transform.rotation);
 
             spawnedObjects.Add(spawnedObj);
         }

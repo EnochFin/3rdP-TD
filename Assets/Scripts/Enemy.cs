@@ -14,15 +14,13 @@ public class Enemy : MonoBehaviour
     Vector3 direction;
     Random rand;
 
-    private void Start()
-    {
-        direction = new Vector3(0f, 0f, -speed);
-    }
-
     private void FixedUpdate()
     {
+        direction.x = transform.forward.x * speed;
+        direction.z = transform.forward.z * speed;
         if (ctrl.isGrounded)
         {
+            Debug.Log($"IsGrounded! {Parent.name}");
             direction.y = 0f;
         }
         else
@@ -43,9 +41,15 @@ public class Enemy : MonoBehaviour
         TextMesh.text = $"Health: {health}";
     }
 
+    void Rotate(Vector3 rotation)
+    {
+        Parent.transform.Rotate(rotation);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(direction);
         ctrl.Move(direction * Time.deltaTime);
     }
 }

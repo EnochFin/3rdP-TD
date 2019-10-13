@@ -52,6 +52,9 @@ public class Turret : MonoBehaviour
 
     public void SetTarget(GameObject target)
     {
-        Target = target;
+        if (Target == null)
+        {
+           Target = target;
+        }
     }
 }
