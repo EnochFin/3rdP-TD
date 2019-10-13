@@ -3,15 +3,16 @@
 public class Gun : MonoBehaviour
 {
     public LineRenderer LineRender;
-    public Camera playerCam;
-    public GameObject spawnObject;
-    public GameObject spawnedObject;
+    public GameObject PlayerCam;
+    public GameObject SpawnObject;
 
     public float damage = 10f;
     public float range = 100f;
     public float spawnDelay = 10f;
     public float lineDisplayTime = .5f;
+    public float maxTurretCount = 2f;
 
+    float turretCount;
     float nextSpawnTime;
     float removeLineRenderTime;
 
@@ -28,7 +29,6 @@ public class Gun : MonoBehaviour
         }
         if (LineRender.enabled && Time.time > removeLineRenderTime)
         {
-            Debug.Log("Removed LineRender");
             LineRender.enabled = false;
         }
     }
@@ -37,35 +37,21 @@ public class Gun : MonoBehaviour
     {
         RaycastHit hit;
 
-        var didHit = Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range);
+        var didHit = Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit, range);
 
         if (didHit)
         {
-            Debug.Log($"Ending Display of line at: {removeLineRenderTime}");
 
             var hitDirection = (hit.point - transform.position).normalized;
-
             Physics.Raycast(transform.position, hitDirection, out RaycastHit gunHit);
-
-            Debug.Log(gunHit.point);
 
             if (CanSpawn())
             {
-                if (spawnedObject != null)
-                {
-                    Destroy(spawnedObject);
-                }
-
-                spawnedObject = Spawn(gunHit.point);
+                Spawn(gunHit.point);
                 LineRender.SetPositions(new Vector3[] { transform.position, hit.point });
                 removeLineRenderTime = Time.time + lineDisplayTime;
                 LineRender.enabled = true;
             }
-            Debug.Log(hit.transform.name);
-        }
-        else
-        {
-            Debug.Log("miss!");
         }
     }
 
@@ -73,32 +59,28 @@ public class Gun : MonoBehaviour
     {
         RaycastHit hit;
 
-        var didHit = Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, range);
+        var didHit = Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit, range);
 
         if (didHit)
         {
             if (hit.collider.CompareTag("Destroyable"))
             {
                 Destroy(hit.collider.gameObject);
+                turretCount -= 1;
             }
-            Debug.Log(hit.transform.name);
         }
-        else
-        {
-            Debug.Log("miss!");
-        }
-
     }
 
     private GameObject Spawn(Vector3 spawnLoc)
     {
+        turretCount += 1;
+        Debug.Log($"Turret count: {turretCount}");
         nextSpawnTime = Time.time + spawnDelay;
-        Debug.Log($"Spawned at: {spawnLoc}");
-        return Instantiate(spawnObject, spawnLoc, Quaternion.identity);
+        return Instantiate(SpawnObject, spawnLoc, Quaternion.identity);
     }
 
     private bool CanSpawn()
     {
-        return Time.time >= nextSpawnTime;
+        return Time.time >= nextSpawnTime && turretCount < maxTurretCount;
     }
 }

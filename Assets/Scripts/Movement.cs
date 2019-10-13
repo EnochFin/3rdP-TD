@@ -1,5 +1,4 @@
-﻿using UnityEngine.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
@@ -12,18 +11,13 @@ public class Movement : MonoBehaviour
     float hor;
     float ver;
 
-    private void Start()
+    private void FixedUpdate()
     {
-        Debug.Log("eskeetit");
+        moveDirection.y += Physics.gravity.y * fallSpeed * Time.deltaTime;
     }
 
     private void Update()
     {
-        if (transform.position.y < -100)
-        {
-            SceneManager.LoadScene("MainLevel");
-        }
-
         hor = Input.GetAxis("Horizontal");
         ver = Input.GetAxis("Vertical");
 
@@ -37,8 +31,6 @@ public class Movement : MonoBehaviour
                 moveDirection.y = JumpHeight;
             }
         }
-        moveDirection.y += Physics.gravity.y * fallSpeed;
-
         moveDirection = transform.TransformDirection(moveDirection);
 
         controller.Move(moveDirection * Time.deltaTime);
