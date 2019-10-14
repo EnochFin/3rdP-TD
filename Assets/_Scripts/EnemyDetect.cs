@@ -15,6 +15,7 @@ public class EnemyDetect : MonoBehaviour
 
     private void OnTriggerExit(Collider coll)
     {
+        Debug.Log("Exiteddlkjadfslkj;asd;lkjadf");
         if (coll.CompareTag("Enemy"))
         {
             Notifee.SetTarget(null);

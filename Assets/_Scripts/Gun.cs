@@ -5,6 +5,7 @@ public class Gun : MonoBehaviour
     public LineRenderer LineRender;
     public GameObject PlayerCam;
     public GameObject SpawnObject;
+    public GameObject HudTowerCountDisplay;
 
     public float damage = 10f;
     public float range = 100f;
