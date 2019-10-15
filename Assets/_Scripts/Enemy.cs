@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
         direction.z = transform.forward.z * speed;
         if (ctrl.isGrounded)
         {
-            Debug.Log($"IsGrounded! {Parent.name}");
             direction.y = 0f;
         }
         else
@@ -49,7 +48,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(direction);
         ctrl.Move(direction * Time.deltaTime);
     }
 }

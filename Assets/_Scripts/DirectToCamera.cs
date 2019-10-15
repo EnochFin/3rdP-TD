@@ -14,6 +14,9 @@ public class DirectToCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Camera.main.transform.rotation;
+        if (Camera.main != null)
+        {
+            transform.rotation = Camera.main.transform.rotation;
+        }
     }
 }

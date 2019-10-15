@@ -1,5 +1,5 @@
-﻿using UnityEngine.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KillPlane : MonoBehaviour
 {
@@ -9,9 +9,6 @@ public class KillPlane : MonoBehaviour
         {
             SceneManager.LoadScene("MainLevel");
         }
-        else
-        {
-            Destroy(collider.gameObject);
-        }
+        Destroy(collider.gameObject);
     }
 }

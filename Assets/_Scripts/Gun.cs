@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
     public LineRenderer LineRender;
     public GameObject PlayerCam;
     public GameObject SpawnObject;
-    public GameObject HudTowerCountDisplay;
+    public TextMeshProUGUI HudTowerCountDisplay;
 
     public float damage = 10f;
     public float range = 100f;
@@ -70,14 +71,20 @@ public class Gun : MonoBehaviour
                 turretCount -= 1;
             }
         }
+        UpdateTowerCount();
     }
 
-    private GameObject Spawn(Vector3 spawnLoc)
+    private void Spawn(Vector3 spawnLoc)
     {
         turretCount += 1;
-        Debug.Log($"Turret count: {turretCount}");
         nextSpawnTime = Time.time + spawnDelay;
-        return Instantiate(SpawnObject, spawnLoc, Quaternion.identity);
+        UpdateTowerCount();
+        Instantiate(SpawnObject, spawnLoc, Quaternion.identity);
+    }
+
+    private void UpdateTowerCount()
+    {
+        HudTowerCountDisplay.text = $"Towers: {turretCount}/{maxTurretCount}";
     }
 
     private bool CanSpawn()

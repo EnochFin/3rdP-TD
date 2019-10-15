@@ -43,8 +43,6 @@ public class Turret : MonoBehaviour
         Target.SendMessage("Damage", dmg);
         nextShot = Time.time + fireRate;
 
-        Debug.Log($"From: {transform.position} To: {hit.point}");
-
         BulletTrail.SetPositions(new Vector3[] { transform.position, hit.point });
         bulletTrailEraseTime = Time.time + bulletTrailTime;
         BulletTrail.enabled = true;
@@ -52,9 +50,6 @@ public class Turret : MonoBehaviour
 
     public void SetTarget(GameObject target)
     {
-        if (Target == null)
-        {
-           Target = target;
-        }
+        Target = target;
     }
 }

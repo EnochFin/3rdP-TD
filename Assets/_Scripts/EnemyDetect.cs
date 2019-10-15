@@ -4,21 +4,37 @@ public class EnemyDetect : MonoBehaviour
 {
     //Object to Notify
     public Turret Notifee;
+    public float range;
 
-    private void OnTriggerEnter(Collider coll)
+    private void Update()
     {
-        if (coll.CompareTag("Enemy"))
+        var objectsInSphere = Physics.OverlapSphere(transform.position, range);
+
+        var minDist = float.MaxValue;
+
+        GameObject target = null;
+
+        foreach(var obj in objectsInSphere)
         {
-            Notifee.SetTarget(coll.gameObject);
+            if (!obj.CompareTag("Enemy"))
+                continue;
+
+            var dir = (obj.transform.position - transform.position).normalized;
+
+            if (Physics.Raycast(transform.position, dir, out var hit))
+            {
+                if (hit.distance < minDist)
+                {
+                    target = obj.gameObject;
+                    minDist = hit.distance;
+                }
+            }
         }
+        Notifee.SetTarget(target);
     }
 
-    private void OnTriggerExit(Collider coll)
+    private void OnDrawGizmos()
     {
-        Debug.Log("Exiteddlkjadfslkj;asd;lkjadf");
-        if (coll.CompareTag("Enemy"))
-        {
-            Notifee.SetTarget(null);
-        }
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
