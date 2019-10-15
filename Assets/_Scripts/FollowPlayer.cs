@@ -6,37 +6,20 @@ public class FollowPlayer : MonoBehaviour
     public float RotationSpeed = 1;
 
     float mouseX, mouseY;
-    bool usingMouse;
 
     private void Start()
     {
-        usingMouse = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (usingMouse && !Cursor.visible)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else if (Cursor.visible)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-            usingMouse = !usingMouse;
-        }
     }
 
     void LateUpdate()
     {
-        if (usingMouse)
-        {
-            CamControl();
-        }
+        CamControl();
     }
 
     void CamControl()

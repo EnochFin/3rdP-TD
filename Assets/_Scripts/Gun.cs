@@ -4,7 +4,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     public LineRenderer LineRender;
-    public GameObject PlayerCam;
+    public GameObject ShootSource;
     public GameObject SpawnObject;
     public TextMeshProUGUI HudTowerCountDisplay;
 
@@ -39,7 +39,7 @@ public class Gun : MonoBehaviour
     {
         RaycastHit hit;
 
-        var didHit = Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit, range);
+        var didHit = Physics.Raycast(ShootSource.transform.position, ShootSource.transform.forward, out hit, range);
 
         if (didHit)
         {
@@ -61,7 +61,7 @@ public class Gun : MonoBehaviour
     {
         RaycastHit hit;
 
-        var didHit = Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out hit, range);
+        var didHit = Physics.Raycast(ShootSource.transform.position, ShootSource.transform.forward, out hit, range);
 
         if (didHit)
         {
