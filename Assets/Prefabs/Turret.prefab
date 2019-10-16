@@ -258,7 +258,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   rotationSpeed: 0
   fireRate: 0.58
-  dmg: 2
+  dmg: 10
   BulletTrail: {fileID: 50776333137087050}
 --- !u!120 &50776333137087050
 LineRenderer:
