@@ -1,29 +1,30 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
     public LineRenderer LineRender;
     public GameObject ShootSource;
     public GameObject SpawnObject;
-    public TextMeshProUGUI HudTowerCountDisplay;
+    public QuickBar QuickBar;
 
-    public float damage = 10f;
     public float range = 100f;
     public float spawnDelay = 10f;
     public float lineDisplayTime = .5f;
-    public float maxTurretCount = 2f;
 
-    float turretCount;
     float nextSpawnTime;
     float removeLineRenderTime;
+
+    private void Start()
+    {
+        nextSpawnTime = Time.time;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            Shoot();
+            Deploy();
         }
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -35,25 +36,23 @@ public class Gun : MonoBehaviour
         }
     }
 
-    void Shoot()
+    void Deploy()
     {
         RaycastHit hit;
 
         var didHit = Physics.Raycast(ShootSource.transform.position, ShootSource.transform.forward, out hit, range);
 
-        if (didHit)
+        if (didHit && Time.time > nextSpawnTime)
         {
-
             var hitDirection = (hit.point - transform.position).normalized;
             Physics.Raycast(transform.position, hitDirection, out RaycastHit gunHit);
+            
+            LineRender.SetPositions(new Vector3[] { transform.position, hit.point });
+            removeLineRenderTime = Time.time + lineDisplayTime;
+            LineRender.enabled = true;
 
-            if (CanSpawn())
-            {
-                Spawn(gunHit.point);
-                LineRender.SetPositions(new Vector3[] { transform.position, hit.point });
-                removeLineRenderTime = Time.time + lineDisplayTime;
-                LineRender.enabled = true;
-            }
+            var status = QuickBar.DeployItem(QuickBar.SelectedIndex, gunHit.point);
+            nextSpawnTime = Time.time + spawnDelay;
         }
     }
 
@@ -67,28 +66,16 @@ public class Gun : MonoBehaviour
         {
             if (hit.collider.CompareTag("Destroyable"))
             {
+                var id = hit.collider.gameObject.GetInstanceID();
+                QuickBar.Return(id);
                 Destroy(hit.collider.gameObject);
-                turretCount -= 1;
             }
         }
-        UpdateTowerCount();
     }
 
     private void Spawn(Vector3 spawnLoc)
     {
-        turretCount += 1;
         nextSpawnTime = Time.time + spawnDelay;
-        UpdateTowerCount();
         Instantiate(SpawnObject, spawnLoc, Quaternion.identity);
-    }
-
-    private void UpdateTowerCount()
-    {
-        HudTowerCountDisplay.text = $"Towers: {turretCount}/{maxTurretCount}";
-    }
-
-    private bool CanSpawn()
-    {
-        return Time.time >= nextSpawnTime && turretCount < maxTurretCount;
     }
 }

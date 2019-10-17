@@ -12,6 +12,13 @@ public class Turret : MonoBehaviour
     float nextShot;
     float bulletTrailEraseTime;
 
+    public int Id;
+
+    public Turret(int id)
+    {
+        Id = id;
+    }
+
     private void Start()
     {
         bulletTrailTime = fireRate / 2f;

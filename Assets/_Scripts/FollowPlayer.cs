@@ -4,6 +4,7 @@ public class FollowPlayer : MonoBehaviour
 {
     public Transform Head, Player;
     public float RotationSpeed = 1;
+    public GameObject HUD;
 
     float mouseX, mouseY;
 
@@ -11,10 +12,9 @@ public class FollowPlayer : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-    }
 
-    private void Update()
-    {
+        Instantiate(HUD);
+
     }
 
     void LateUpdate()
