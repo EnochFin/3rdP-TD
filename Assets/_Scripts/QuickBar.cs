@@ -10,7 +10,7 @@ public class QuickBar : MonoBehaviour
 
     private List<Item> store;
 
-    private QuickBarDisplay display;
+    public QuickBarDisplay display;
 
     // Start is called before the first frame update
     void Start()
@@ -26,24 +26,17 @@ public class QuickBar : MonoBehaviour
         }
     }
 
-    public Item SelectItem(int i)
+    public void SelectItem()
     {
-        if (i >= store.Count)
-        {
-            i = 0;//loop around to the first item
-        }
+        SelectedIndex = GetNextIndex();
 
-        display = GameObject.FindGameObjectWithTag("QuickBar").GetComponent<QuickBarDisplay>();
-
-        SelectedIndex = i;
-        display.UpdateDisplay(store, i);
-        return store[i];
+        display.UpdateDisplay(store, SelectedIndex);
     }
 
     //returns status message meant to be displayed
     public string DeployItem(int i, Vector3 deploymentLocation)
     {
-        if (store[i].deployed)
+        if (i < 0 || store[i].deployed)
         {
             return "Cannot deploy Item already deployed!";
         }
@@ -52,7 +45,7 @@ public class QuickBar : MonoBehaviour
         store[i].InstanceId = Instantiate(store[i].turret.gameObject, deploymentLocation, Quaternion.identity).GetInstanceID();
         store[i].deployed = true;
 
-        SelectItem(i + 1);
+        SelectItem();
         return $"Deployed Slot{i + 1}";
     }
 
@@ -66,6 +59,7 @@ public class QuickBar : MonoBehaviour
                 item.deployed = false;
             }
         }
+        SelectItem();
     }
 
     public bool RemoveItem(int i)
@@ -76,5 +70,17 @@ public class QuickBar : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private int GetNextIndex()
+    {
+        var start = SelectedIndex < 0 ? 0 : SelectedIndex;
+        for (int i = 0; i < store.Count; i++)
+        {
+            var index = (start + i) % store.Count;
+            if (!store[index].deployed)
+                return index;
+        }
+        return -1;
     }
 }
