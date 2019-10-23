@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class Turret : MonoBehaviour
     public float fireRate;
     public float dmg = 10f;
     public LineRenderer BulletTrail;
+    public TextMeshPro text;
 
     float bulletTrailTime;
     float nextShot;
@@ -21,7 +23,11 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
-        bulletTrailTime = fireRate / 2f;
+        rotationSpeed = Random.Range(0, 1);
+        fireRate = Random.Range(0.01f, 0.99f);
+        dmg = fireRate * 100;
+        text.text = $"rotSpeed: {rotationSpeed}\r\nfireRate: {fireRate}\r\ndamage: {dmg}";
+        bulletTrailTime = fireRate / 5f;
         nextShot = Time.time;
     }
 

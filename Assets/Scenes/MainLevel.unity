@@ -300,7 +300,7 @@ MonoBehaviour:
   ShootSource: {fileID: 110784824}
   SpawnObject: {fileID: 6153137328266818610, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
     type: 3}
-  QuickBar: {fileID: 0}
+  QuickBar: {fileID: 432281477}
   range: 100
   spawnDelay: 0.53
   lineDisplayTime: 0.5
@@ -606,6 +606,19 @@ MonoBehaviour:
   SelectedIndex: 0
   DefaultItem: {fileID: 6153137328266818610, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
     type: 3}
+  display: {fileID: 0}
+--- !u!114 &432281477 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7739876385352708824, guid: b04543509e666e847912e5cded1661f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 732981928}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432281475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e378362480789fd47a22f6d0e884008f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &436564053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,7 +1273,7 @@ PrefabInstance:
     - target: {fileID: 6153137328266818607, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6153137328266818607, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
         type: 3}
@@ -1275,6 +1288,36 @@ PrefabInstance:
     - target: {fileID: 6153137328266818607, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203850781387137865, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982295034513923545, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982295034513923545, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982295034513923545, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982295034513923545, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982295034513923545, guid: fc0082a0f92e44e4b9e76c59cc3ce9b9,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
